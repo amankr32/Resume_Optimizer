@@ -1,8 +1,10 @@
-
 import axios from "axios";
 
+// In local dev, VITE_API_BASE_URL is unset, so this falls back to "/api",
+// which Vite's dev proxy (see vite.config.js) forwards to your local backend.
+// In production, set VITE_API_BASE_URL to your deployed backend's full URL.
 export const apiClient = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "/api",
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });
@@ -22,5 +24,3 @@ apiClient.interceptors.response.use(
     });
   }
 );
-
-
